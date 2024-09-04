@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:qara/Feature/ToDO/cubit/muilt_state/to_do_muilti_state.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'to_do_multi_cubit.freezed.dart';
+part 'multi_state_state.dart';
+part 'multi_state_cubit.freezed.dart';
 
-class ToDoMultiCubit extends Cubit<ToDoMultiState> {
-  ToDoMultiCubit() : super(ToDoMultiState.initial());
+class MultiStateCubit extends Cubit<MultiStateState> {
+  MultiStateCubit() : super(MultiStateState.initial());
 
   void addItem(String title, String description) {
     if (state is _Loaded) {
@@ -12,9 +13,9 @@ class ToDoMultiCubit extends Cubit<ToDoMultiState> {
       if (currentState.items.length < 10) {
         final updatedItems = List<Map<String, String>>.from(currentState.items)
           ..add({'title': title, 'description': description});
-        emit(ToDoMultiState.loaded(updatedItems));
+        emit(MultiStateState.loaded(updatedItems));
       } else {
-        emit(ToDoMultiState.limitReached());
+        emit(MultiStateState.limitReached());
       }
     }
   }
@@ -24,11 +25,11 @@ class ToDoMultiCubit extends Cubit<ToDoMultiState> {
       final currentState = state as _Loaded;
       final updatedItems = List<Map<String, String>>.from(currentState.items)
         ..removeAt(index);
-      emit(ToDoMultiState.loaded(updatedItems));
+      emit(MultiStateState.loaded(updatedItems));
     }
   }
 
   void loadItems(List<Map<String, String>> items) {
-    emit(ToDoMultiState.loaded(items));
+    emit(MultiStateState.loaded(items));
   }
 }

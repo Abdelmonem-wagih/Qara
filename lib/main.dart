@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qara/Feature/ToDO/cubit/singel_state/to_do_cubit.dart';
+import 'package:qara/Feature/ToDO/cubit/muilt_state/cubit/multi_state_cubit.dart';
+import 'package:qara/Feature/ToDO/cubit/muilt_state/cubit_observer.dart';
 import 'package:qara/Feature/ToDO/screens/home_screen.dart';
 
 void main() {
+  Bloc.observer = MyCubitObserver();
   runApp(const MyApp());
 }
 
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
-        create: (context) => ToDoCubit(context),
+        create: (context) => MultiStateCubit()..loadItems([]),
         child: HomeScreen(),
       ),
     );
